@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>custom GTM - Tool</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper blue-grey darken-4">
+
+                <a class="left nav-item nav-tab" data-target="#home"><b>Custom GTM - Tool</b></a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li class="nav-tab" data-target="#newCustom"><a>new custom GTM</a></li>
+                    <li class="nav-tab" data-target="#updateCustom"><a>update custom GTM</a></li>
+                </ul>
+
+                <a data-target="mobile-navbar" class="sidenav-trigger right nav-item">
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <ul id="mobile-navbar" class="right sidenav">
+                    <li class="nav-tab" data-target="#newCustom"><a>new custom GTM</a></li>
+                    <li class="nav-tab" data-target="#updateCustom"><a>update custom GTM</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <div class="container card-panel center tab-item active" id="home">
+            home
+        </div>
+
+        <div class="container card-panel center tab-item" id="newCustom">
+            <input type="file" accept="" id="xlsxFile">
+            <textarea id="codeToCopy" cols="30" rows="10"></textarea>
+        </div>
+
+        <div class="container card-panel center tab-item" id="updateCustom">
+            update
+        </div>
+    </main>
+
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+.nav-item{
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.nav-item:hover {
+    background-color: rgba(0,0,0,0.1)
+}
+
+body {
+    background-color: #665f5f1c;
+}
+
+.container {
+    background-color: #fff;
+    margin: 10px auto !important;
+}
+
+.tab-item:not(.active) {
+    display: none
+}
