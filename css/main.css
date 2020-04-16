@@ -16,6 +16,25 @@ body {
     margin: 10px auto !important;
 }
 
-.tab-item:not(.active) {
+.tab-item:not(.active),
+#code:not(.active),
+#processNew:not(.active)
+ {
     display: none
 }
+
+input.fileName:disabled{
+    border-bottom: 1px solid rgb(122, 122, 122) !important;
+}
+
+::placeholder { 
+    color: rgb(122, 122, 122); 
+    opacity: 1; 
+  }
+
+  #codeToCopy{
+    white-space: pre;
+    resize: none;
+    overflow: auto;
+    height: 250px;
+  }
