@@ -37,4 +37,6 @@ input.fileName:disabled{
     resize: none;
     overflow: auto;
     height: 250px;
+    background: black;
+    color: darkolivegreen
   }
