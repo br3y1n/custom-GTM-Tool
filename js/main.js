@@ -42,25 +42,54 @@ $('#processNew').click(function () {
         const
             fileData = reader.result,
             workbook = XLSX.read(fileData, { type: 'binary' }),
-            tagObjects = {}
+            customGTM = {
+                metaData: {
+                    url: '',
+                    last_modified: file.lastModified,
+                    version: 1
+                },
+                tags: {}
+            },
+            nomalizeSpaces = text => text.trim().replace(/\s{2,}/g, ' ')
 
         let
             tagNumber = 1
 
         Object.values(workbook.Sheets).forEach(sheet => {
             Object.values(sheet).forEach(cell => {
-                if (cell.w && cell.w.includes('dataLayer.push')) {
-                    const
-                        TAG_VALUE_STRING = cell.w.substring(15, cell.w.length - 2).replace(/\'/g, '\"'),
-                        tagValueObject = JSON.parse(TAG_VALUE_STRING)
 
-                    tagObjects[`tag_${tagNumber}`] = tagValueObject
-                    tagNumber++
+                if (cell.w) {
+
+                    const
+                        CELL_TEXT = cell.w.trim(),
+                        CELL_TEXT_LC = CELL_TEXT.toLowerCase()
+
+                    if (CELL_TEXT.includes('dataLayer.push')) {
+                        const
+                            TAG_VALUE_STRING = CELL_TEXT.substring(15, CELL_TEXT.length - 2).replace(/\'/g, '\"'),
+                            tagValueObject = JSON.parse(TAG_VALUE_STRING),
+                            normalizeTagValues = {}
+
+                        Object.entries(tagValueObject).forEach(attr => {
+                            const
+                                KEY = attr[0],
+                                VALUE = attr[1]
+
+                            normalizeTagValues[KEY] = nomalizeSpaces(VALUE)
+                        })
+
+                        customGTM.tags[`tag_${tagNumber}`] = normalizeTagValues
+                        tagNumber++
+                    }
+
+                    if (CELL_TEXT_LC.includes('http://') || CELL_TEXT_LC.includes('https://')) {
+                        customGTM.metaData.url = CELL_TEXT_LC
+                    }
                 }
             })
         })
 
-        processData(tagObjects)
+        processData(customGTM)
     }
 
 })
@@ -87,34 +116,35 @@ function validateType(allowedType, event) {
 
 }
 
-function processData(tagObjects) {
+function processData(customGTM) {
 
     const
-        HAS_DATA = JSON.stringify(tagObjects) != '{}'
+        tagObjects = customGTM.tags,
+        HAS_TAGS_DATA = JSON.stringify(tagObjects) != '{}'
 
-    if (HAS_DATA) {
+    if (HAS_TAGS_DATA) {
 
         const
-            createTextLineJS = tags => {
+            createTextLineJS = objects => {
                 const
-                    tagEntries = Object.entries(tags),
-                    LAST_TAG = tagEntries.length - 1
+                    objectEntries = Object.entries(objects),
+                    LAST_OBJECT = objectEntries.length - 1
 
                 let
-                    tagLines = ''
+                    objectLines = ''
 
-                tagEntries.forEach((tag, idx) => {
+                objectEntries.forEach((object, idx) => {
                     const
-                        TAG_KEY = tag[0],
-                        TAG_VALUE = JSON.stringify(tag[1]),
-                        TAG_LINE = `\t\t${TAG_KEY}: ${TAG_VALUE}${LAST_TAG != idx ? ',\n' : ''}`
+                        OBJECT_KEY = object[0],
+                        OBJECT_VALUE = JSON.stringify(object[1]),
+                        OBJECT_LINE = `\t\t\t${OBJECT_KEY}: ${OBJECT_VALUE}${LAST_OBJECT != idx ? ',\n' : ''}`
 
-                    tagLines += TAG_LINE
+                    objectLines += OBJECT_LINE
                 })
 
-                return tagLines
+                return objectLines
             },
-            stringToCopy = `const \n\tcustomGTM = new CustomGTM({\n${createTextLineJS(tagObjects)} \n\t})\n`
+            stringToCopy = `const \n\tcustomGTM = new CustomGTM({\n\t\tmetaData: {\n${createTextLineJS(customGTM.metaData)} \n\t\t},\n\t\ttags: {\n${createTextLineJS(tagObjects)} \n\t\t}\n\t})\n`
 
         $('#codeToCopy').val(stringToCopy)
         $('#processNew').attr('disabled', true).prop('fileData', null).removeClass('active')
@@ -127,6 +157,4 @@ function processData(tagObjects) {
         $('#code').removeClass('active')
         swal('Invalid template!', 'This file isn\'t the GTM template', 'error')
     }
-
-
 }
