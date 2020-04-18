@@ -32,11 +32,75 @@ input.fileName:disabled{
     opacity: 1; 
   }
 
-  #codeToCopy{
+  .code{
     white-space: pre;
     resize: none;
     overflow: auto;
     height: 250px;
     background: black;
+    color: dimgrey
+  }
+
+  #codeToCopy{
     color: darkolivegreen
   }
+  
+  .tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: rgba(94, 94, 94, 0.2);
+    outline: none;
+    color: black
+}
+
+.tabs .tab a{
+    color:#000;
+}
+
+.tabs .tab a:hover {
+    color:rgb(117, 117, 117);
+} 
+
+.tabs .tab a.active {
+    color:rgb(48, 48, 48);
+} 
+
+.tabs .indicator {
+    background-color:#000;
+} 
+
+.notifications{
+    margin: 15px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    width:100%;
+}
+
+.notifications .logo{
+    width:70px;
+    padding:0;
+    margin:0;
+}
+
+.notifications .logo i{
+    width: 100%;
+    color: white;
+    font-size: 40px;
+}
+
+.notifications .content{
+    width:calc(100% - 70px);
+    text-align: left;
+    padding: 0px 20px;
+    margin:0;
+}
+
+.notifications .content ul{
+    padding-left: 40px;
+}
+
+.notifications .content li{
+    text-align: justify;
+    list-style-type: disc;
+}
+

@@ -48,12 +48,60 @@ $('#processNew').click(function () {
                     last_modified: file.lastModified,
                     version: 1
                 },
-                tags: {}
+                tags: {},
+                assignment: {}
             },
-            nomalizeSpaces = text => text.trim().replace(/\s{2,}/g, ' ')
+            nomalizeSpaces = text => text.trim().replace(/\s{2,}/g, ' '),
+            compareObj = (object1, object2) => {
+                const
+                    objectKeys1 = Object.keys(object1).sort(),
+                    objectKeys2 = Object.keys(object2).sort()
+
+                if (objectKeys1.length !== objectKeys2.length) {
+                    return false
+                }
+
+                if (objectKeys1.join('') !== objectKeys2.join('')) {
+                    return false
+                }
+
+                for (let idx = 0; idx < objectKeys1.length; idx++) {
+                    const
+                        KEY = objectKeys1[idx]
+
+                    if (object1[KEY] !== object2[KEY]) return false
+                }
+
+                return true
+            },
+            checkPushAssignments = (currentTags, newTag) => {
+
+                const
+                    currentTagEntries = Object.entries(currentTags)
+
+                for (let idx = 0; idx < currentTagEntries.length; idx++) {
+                    const
+                        currentTagEntrie = currentTagEntries[idx],
+                        CURRENT_KEY = currentTagEntrie[0],
+                        currentTag = currentTagEntrie[1],
+                        TAG_EXISTS = compareObj(currentTag, newTag)
+
+                    if (TAG_EXISTS)
+                        return {
+                            assign: true,
+                            tag_name: CURRENT_KEY
+                        }
+
+                }
+
+                return {
+                    assign: false
+                }
+
+            }
 
         let
-            tagNumber = 1
+            numberPush = 1
 
         Object.values(workbook.Sheets).forEach(sheet => {
             Object.values(sheet).forEach(cell => {
@@ -78,8 +126,20 @@ $('#processNew').click(function () {
                             normalizeTagValues[KEY] = nomalizeSpaces(VALUE)
                         })
 
-                        customGTM.tags[`tag_${tagNumber}`] = normalizeTagValues
-                        tagNumber++
+                        const
+                            pushAssignments = checkPushAssignments(customGTM.tags, normalizeTagValues),
+                            NUMBER_TAGS = Object.keys(customGTM.tags).length,
+                            TAG_NUMBER = NUMBER_TAGS + 1,
+                            TAG_NAME = pushAssignments.assign ? pushAssignments.tag_name : `tag_${TAG_NUMBER}`
+
+                        if (!pushAssignments.assign)
+                            customGTM.tags[TAG_NAME] = normalizeTagValues
+
+                        customGTM.assignment[TAG_NAME]
+                            ? customGTM.assignment[TAG_NAME].push(`push ${numberPush}`)
+                            : customGTM.assignment[TAG_NAME] = [`push ${numberPush}`]
+
+                        numberPush++
                     }
 
                     if (CELL_TEXT_LC.includes('http://') || CELL_TEXT_LC.includes('https://')) {
@@ -120,6 +180,7 @@ function processData(customGTM) {
 
     const
         tagObjects = customGTM.tags,
+        assignmentTags = customGTM.assignment,
         HAS_TAGS_DATA = JSON.stringify(tagObjects) != '{}'
 
     if (HAS_TAGS_DATA) {
@@ -146,6 +207,7 @@ function processData(customGTM) {
             },
             stringToCopy = `const \n\tcustomGTM = new CustomGTM({\n\t\tmetaData: {\n${createTextLineJS(customGTM.metaData)} \n\t\t},\n\t\ttags: {\n${createTextLineJS(tagObjects)} \n\t\t}\n\t})\n`
 
+        createAssignments(assignmentTags)
         $('#codeToCopy').val(stringToCopy)
         $('#processNew').attr('disabled', true).prop('fileData', null).removeClass('active')
         $('#code').addClass('active')
@@ -157,4 +219,22 @@ function processData(customGTM) {
         $('#code').removeClass('active')
         swal('Invalid template!', 'This file isn\'t the GTM template', 'error')
     }
+}
+
+
+function createAssignments(assignments) {
+    let
+        assignmentList = ''
+
+    Object.entries(assignments).forEach(assignment => {
+        const
+            NAME = assignment[0],
+            PUSHES = assignment[1].join(' <b>-</b> '),
+            LIST_ELEMENT_STRING = `<li><b>${NAME} = [</b> ${PUSHES} <b>]</b></li>`
+
+        assignmentList += LIST_ELEMENT_STRING
+    })
+
+    $('.assignment').html(assignmentList)
+
 }

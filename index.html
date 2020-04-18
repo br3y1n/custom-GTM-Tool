@@ -54,10 +54,14 @@
 
         <div class="container card-panel center tab-item" id="newCustom">
             <h3>New custom GTM</h3>
-            <p><i>Select a file with the extension .xlsx or .xls, this file must be the GTM template for it to be
-                    processed.</i></p>
-            <br>
             <div class="row">
+                <p>
+                    <i>
+                        Select a file with the extension .xlsx or .xls, this file must be the GTM template for it to be
+                        processed.
+                    </i>
+                </p>
+                <br>
                 <div class="file-field input-file">
                     <button class="btn red darken-2 left" id="xlsxFile">
                         <i class="material-icons">attach_file</i>
@@ -67,23 +71,136 @@
                         <input class="fileName" id="xlsxName" type="text" placeholder="File (.xls/.xlsx)" disabled>
                     </div>
                 </div>
+                <br>
+                <button id="processNew" class="btn red darken-2 active" disabled>
+                    Process file
+                    <i class="material-icons right">settings</i>
+                </button>
             </div>
-            <br>
-            <button id="processNew" class="btn red darken-2 active" disabled>
-                Process
-                <i class="material-icons right">settings</i>
-            </button>
-            <div id="code" class="row">
+
+            <div id="code">
+                <div class="notifications">
+                    <div class="logo blue lighten-2 valign-wrapper">
+                        <i class="material-icons center">info_outline</i>
+                    </div>
+
+                    <div class="content blue lighten-4">
+                        <p><b>Assignment of tags to the "pushes".</b></p>
+                        <p>
+                            <i>
+                                <b>Note:</b>
+                                if a tag has more than 1 push, it is because these "pushes" were repeated in the GTM
+                                template.
+                            </i>
+                        </p>
+                        <ul class="assignment"></ul>
+                    </div>
+                </div>
+
                 <p><b>Copy this code:</b></p>
-                <textarea id="codeToCopy" readonly></textarea>
+                <textarea id="codeToCopy" class="code" readonly></textarea>
             </div>
-
-
-
         </div>
 
+
         <div class="container card-panel center tab-item" id="updateCustom">
-            <h3>Developing...</h3>
+
+            <!--
+            <h3>Update custom GTM</h3>
+            <p>
+                <i>
+                    Copy the current custom GTM code here, (from the words "const customGTM = new...")
+                </i>
+            </p>
+            <br>
+
+            <div class="row">
+                <p><b>Current code:</b></p>
+                <textarea id="codeToEvaluate"></textarea>
+                <button id="processCode" class="btn red darken-2 active" disabled>
+                    Process code
+                    <i class="material-icons right">settings</i>
+                </button>
+            </div>
+
+            <div class="row">
+                <p><b>New GTM template:</b></p>
+                <p>
+                    <i>
+                        Select a file with the extension .xlsx or .xls, this file must be the GTM template for it to be
+                        processed.
+                    </i>
+                </p>
+                <div class="file-field input-file">
+                    <button class="btn red darken-2 left" id="xlsxFileUpdate">
+                        <i class="material-icons">attach_file</i>
+                    </button>
+
+                    <div class="file-path-wrapper">
+                        <input class="fileName" id="xlsxNameUpdate" type="text" placeholder="File (.xls/.xlsx)"
+                            disabled>
+                    </div>
+                </div>
+                <br>
+
+                <button id="processFile" class="btn red darken-2 active" disabled>
+                    Process file
+                    <i class="material-icons right">settings</i>
+                </button>
+            </div>
+
+
+            <div class="row">
+                <p><b>GTM template data, code:</b></p>
+                <textarea id="templateCode" readonly></textarea>
+            </div>
+
+
+            <div class="card-tabs">
+                <ul class="tabs  tabs-fixed-width grey lighten-3">
+                    <li class="tab"><a class="active" href="#replaceID">Replace/preserve ID</a></li>
+                    <li class="tab"><a class="active" href="#replace">Replace</a></li>
+                    <li class="tab"><a href="#update">Update</a></li>
+                </ul>
+            </div>
+
+            <div class="row">
+
+                <div id="replaceID" class="col s12">
+                    <p><b>Copy this code:</b></p>
+                    <textarea id="codeToCopy" readonly></textarea>
+
+                    <div id="deleteTags">
+                        delete tags
+                    </div>
+
+                    <div id="newTags">
+                        new tags
+                    </div>
+                </div>
+
+                <div id="replace" class="col s12">
+                    <p><b>Copy this code:</b></p>
+                    <textarea id="codeToCopy" readonly></textarea>
+
+                    <div id="deleteTags">
+                        delete tags
+                    </div>
+
+                    <div id="newTags">
+                        new tags
+                    </div>
+                </div>
+
+                <div id="update" class="col s12">
+                    <p><b>Copy this code:</b></p>
+                    <textarea id="codeToCopy" readonly></textarea>
+
+                    <div id="updateTags">
+                        new tags
+                    </div>
+                </div>
+            </div>-->
         </div>
     </main>
 
