@@ -49,7 +49,7 @@
                 </i>
             </p>
             <br>
-            <img src="imgs/preview.png" class="responsive-img" alt="preview">
+            <img src="imgs/preview.png" class="responsive-img initImage" alt="preview">
         </div>
 
         <div class="container card-panel center tab-item" id="newCustom">
@@ -63,23 +63,25 @@
                 </p>
                 <br>
                 <div class="file-field input-file">
-                    <button class="btn red darken-2 left" id="xlsxFile">
+                    <button class="btn red darken-2 left xlsxFile" data-processButton="#processXlsxNew"
+                        data-xlsxName="#xlsxNameNew">
                         <i class="material-icons">attach_file</i>
                     </button>
 
                     <div class="file-path-wrapper">
-                        <input class="fileName" id="xlsxName" type="text" placeholder="File (.xls/.xlsx)" disabled>
+                        <input class="fileName" id="xlsxNameNew" type="text" placeholder="File (.xls/.xlsx)" disabled>
                     </div>
                 </div>
                 <br>
-                <button id="processNew" class="btn red darken-2 active" disabled>
+                <button id="processXlsxNew" class="processXlsx btn red darken-2 active"
+                    data-processCode="#processCodeNew" data-xlsxName="#xlsxNameNew" disabled>
                     Process file
                     <i class="material-icons right">settings</i>
                 </button>
             </div>
 
-            <div id="code">
-                <div class="notifications">
+            <div id="processCodeNew" class="xlsxCodeProcessed grey lighten-2">
+                <div class=" notifications">
                     <div class="logo blue lighten-2 valign-wrapper">
                         <i class="material-icons center">info_outline</i>
                     </div>
@@ -98,7 +100,7 @@
                 </div>
 
                 <p><b>Copy this code:</b></p>
-                <textarea id="codeToCopy" class="code" readonly></textarea>
+                <textarea class="code" readonly></textarea>
             </div>
         </div>
 

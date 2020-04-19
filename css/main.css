@@ -17,8 +17,8 @@ body {
 }
 
 .tab-item:not(.active),
-#code:not(.active),
-#processNew:not(.active)
+.xlsxCodeProcessed:not(.active),
+.processXlsx:not(.active)
  {
     display: none
 }
@@ -30,6 +30,15 @@ input.fileName:disabled{
 ::placeholder { 
     color: rgb(122, 122, 122); 
     opacity: 1; 
+  }
+
+  .initImage{
+      border-radius: 10px;
+  }
+
+  .xlsxCodeProcessed {
+      padding: 10px 20px;
+      border-radius: 10px;
   }
 
   .code{
@@ -104,3 +113,34 @@ input.fileName:disabled{
     list-style-type: disc;
 }
 
+.swalContent{
+    text-align: justify;
+}
+
+.swalContent{
+    text-align: justify;
+    padding: 0px 20px;
+}
+
+.swalContent em{
+    word-break: break-all;
+}
+
+.swalContent span b{
+    color: #26a69a;
+}
+
+.swal-button--cancel{
+    color: white;
+    background: rgb(228, 75, 75);
+}
+
+.swal-button--cancel:focus{
+    color: white;
+    background: #D32F2F;
+}
+
+.swal-button--cancel:not([disabled]):hover{
+    color: white;
+    background: rgb(226, 112, 112);
+}
