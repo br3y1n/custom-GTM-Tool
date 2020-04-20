@@ -122,25 +122,23 @@
 
         <div class="container card-panel center tab-item" id="updateCustom">
 
-            <!--
             <h3>Update custom GTM</h3>
             <p>
                 <i>
                     Copy the current custom GTM code here, (from the words "const customGTM = new...")
                 </i>
             </p>
-            <br>
 
             <div class="row">
                 <p><b>Current code:</b></p>
-                <textarea id="codeToEvaluate"></textarea>
-                <button id="processCode" class="btn red darken-2 active" disabled>
+                <textarea id="codeToEvaluate" class="code"></textarea>
+                <button id="evaluateCode" class="btn red darken-2 active" disabled>
                     Process code
                     <i class="material-icons right">settings</i>
                 </button>
             </div>
 
-            <div class="row">
+            <div id="GTMtemplateXlsx" class="row sections">
                 <p><b>New GTM template:</b></p>
                 <p>
                     <i>
@@ -149,7 +147,8 @@
                     </i>
                 </p>
                 <div class="file-field input-file">
-                    <button class="btn red darken-2 left" id="xlsxFileUpdate">
+                    <button class="btn red darken-2 left xlsxFile" data-processButton="#processXlsxUpdate"
+                        data-xlsxName="#xlsxNameUpdate">
                         <i class="material-icons">attach_file</i>
                     </button>
 
@@ -160,20 +159,54 @@
                 </div>
                 <br>
 
-                <button id="processFile" class="btn red darken-2 active" disabled>
+                <button id="processXlsxUpdate" class="processXlsx btn red darken-2 active"
+                    data-processCode="#GTMtemplateCode" data-xlsxName="#xlsxNameUpdate" data-hide="#GTMtemplateXlsx"
+                    data-show="#mergeSection" disabled>
                     Process file
                     <i class="material-icons right">settings</i>
                 </button>
             </div>
 
 
-            <div class="row">
+            <div id="GTMtemplateCode" class="xlsxCodeProcessed row sections grey lighten-2">
+                <div class=" notifications">
+                    <div class="logo blue lighten-2 valign-wrapper">
+                        <i class="material-icons center">info_outline</i>
+                    </div>
+
+                    <div class="content blue lighten-4">
+                        <p><b>Assignment of tags to the "pushes".</b></p>
+                        <p>
+                            <i>
+                                <b>Note:</b>
+                                if a tag has more than 1 push, it is because these "pushes" were repeated in the GTM
+                                template, the data presentation format is as follows: <b>tag name = [</b> <b
+                                    class="sheetName">sheet name (</b> pushes <b class="sheetName">)</b><b>]</b>
+                            </i>
+                        </p>
+                        <ul class="assignment"></ul>
+                    </div>
+                </div>
+
                 <p><b>GTM template data, code:</b></p>
-                <textarea id="templateCode" readonly></textarea>
+                <textarea class="code" readonly></textarea>
+            </div>
+
+            <div id="mergeSection" class="row sections">
+                <button id="mergeCode" class="btn red darken-2">
+                    Merge code
+                    <i class="material-icons right">settings</i>
+                </button>
+            </div>
+
+            <!--DEVELOPING-->
+            <div id="developing" class="row sections">
+                <h4>DEVELOPING...</h4>
             </div>
 
 
-            <div class="card-tabs">
+
+            <div class="card-tabs sections result">
                 <ul class="tabs  tabs-fixed-width grey lighten-3">
                     <li class="tab"><a class="active" href="#replaceID">Replace/preserve ID</a></li>
                     <li class="tab"><a class="active" href="#replace">Replace</a></li>
@@ -181,7 +214,7 @@
                 </ul>
             </div>
 
-            <div class="row">
+            <div class="row sections result">
 
                 <div id="replaceID" class="col s12">
                     <p><b>Copy this code:</b></p>
@@ -217,7 +250,7 @@
                         new tags
                     </div>
                 </div>
-            </div>-->
+            </div>
         </div>
     </main>
 

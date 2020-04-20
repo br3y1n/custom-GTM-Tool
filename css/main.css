@@ -18,7 +18,8 @@ body {
 
 .tab-item:not(.active),
 .xlsxCodeProcessed:not(.active),
-.processXlsx:not(.active)
+.processXlsx:not(.active),
+#evaluateCode:not(.active)
  {
     display: none
 }
@@ -47,7 +48,8 @@ input.fileName:disabled{
     overflow: auto;
     height: 250px;
     background: black;
-    color: dimgrey
+    color: dimgrey;
+    margin: 0px 0px 20px 0px
   }
 
   #codeToCopy{
@@ -77,7 +79,7 @@ input.fileName:disabled{
 } 
 
 .notifications{
-    margin: 15px 0;
+    margin: 20px 0;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -174,4 +176,8 @@ input.fileName:disabled{
 
 .JSfunction{
     color: #c78800
+}
+
+.sections:not(.active){
+    display: none;
 }

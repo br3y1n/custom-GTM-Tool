@@ -45,7 +45,9 @@ $('.processXlsx').click(function () {
         data = {
             thisButton: $(this),
             targetProcess: $(this).data('processcode'),
-            xlsxName: $(this).data('xlsxname')
+            xlsxName: $(this).data('xlsxname'),
+            hide: $(this).data('hide'),
+            show: $(this).data('show')
         }
 
     reader.readAsBinaryString(file)
@@ -118,11 +120,49 @@ $('.processXlsx').click(function () {
         sheets.length > 1
             ? runCustomSwal(pushData, generateCustomGTM)
             : generateCustomGTM(pushData, [select], SHEET_URL)
+    }
+})
 
+$('#codeToEvaluate').on('change keyup', evaluateText)
+
+$('#evaluateCode').click(function () {
+    const
+        CURRENT_CODE = $('#codeToEvaluate').val().replace(/[\f\n\r\t\v]/g, ' ').replace(/\s{2,}/g, ' ').trim(),
+        POS_OBJECT = CURRENT_CODE.indexOf('(') != -1 ? CURRENT_CODE.indexOf('(') : 0,
+        OBJECT_TEXT = CURRENT_CODE.slice(POS_OBJECT, CURRENT_CODE.length).trim(),
+        CAN_EVALUATE = /^\(.*\)$/.test(OBJECT_TEXT),
+        OBJECT_TO_EVALUATE = CAN_EVALUATE ? OBJECT_TEXT : `(${OBJECT_TEXT})`
+
+    try {
+        const
+            customGTM = eval(OBJECT_TO_EVALUATE)
+
+        if (customGTM.tags && customGTM.metaData) {
+            $(this).removeClass('active')
+            $('#GTMtemplateXlsx').addClass('active')
+            $('#codeToEvaluate').attr('readonly', true)
+        }
+
+        else
+            swal('customGTM invalid', 'This code doesn\'t belong to a customGTM', 'error')
+
+    } catch {
+        swal('Syntax Error', 'check your code', 'error')
     }
 
 })
 
+$('#mergeCode').click(function () { //check code ::::TEST:::::
+    $('#developing').addClass('active')
+    $('#mergeSection').removeClass('active')
+})
+
+function evaluateText() {
+    const
+        thisValue = $(this).val().trim()
+
+    $('#evaluateCode').attr('disabled', thisValue == '')
+}
 
 function validateType(data, event) {
     const
@@ -177,6 +217,8 @@ function processData(customGTM, data) {
         $(data.targetProcess).find('textarea').val(stringToCopy)
         data.thisButton.attr('disabled', true).prop('fileData', null).removeClass('active')
         $(data.targetProcess).addClass('active')
+        if (data.show) $(data.show).addClass('active')
+        if (data.hide) $(data.hide).removeClass('active')
     }
 
     else {
