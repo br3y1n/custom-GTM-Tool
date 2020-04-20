@@ -92,14 +92,29 @@
                             <i>
                                 <b>Note:</b>
                                 if a tag has more than 1 push, it is because these "pushes" were repeated in the GTM
-                                template.
+                                template, the data presentation format is as follows: <b>tag name = [</b> <b
+                                    class="sheetName">sheet name (</b> pushes <b class="sheetName">)</b><b>]</b>
                             </i>
                         </p>
                         <ul class="assignment"></ul>
+
+                        <p>
+                            <i>
+                                To use these tags you must add the customGTM class and the tag_x class to an html tag
+                                or add the customGTM.runTag(tag_x) code in javascript (where x is the number of the tag
+                                you want to chain as an event), for example:
+                            </i>
+                        </p>
+                        <p><b>HTML</b>
+                            <code><span class="htmlSymbol">&lt</span><span class="htmlTag">button</span> <span class="htmlAttr">class</span><span class="htmlSymbol">=</span><span class="htmlClass">"customGTM tag_1"</span><span class="htmlSymbol">&gt</span>This is tag_1<span class="htmlSymbol">&lt/</span><span class="htmlTag">button</span><span class="htmlSymbol">&gt</span></code>
+                        </p>
+                        <p><b>JS</b>
+                            <code><span class="JSvar">customGTM</span><span class="JSsymbol">.</span><span class="JSfunction">runTag</span><span class="JSsymbol">(</span><span class="JSvar">tag_1</span><span class="JSsymbol">)</span></code>
+                        </p>
                     </div>
                 </div>
 
-                <p><b>Copy this code:</b></p>
+                <p><b>Copy this at the beginning of your JS code:</b></p>
                 <textarea class="code" readonly></textarea>
             </div>
         </div>

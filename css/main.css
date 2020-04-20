@@ -108,9 +108,14 @@ input.fileName:disabled{
     padding-left: 40px;
 }
 
+.notifications p{
+    text-align: justify;
+}
+
 .notifications .content li{
     text-align: justify;
     list-style-type: disc;
+    padding: 10px 0px;
 }
 
 .swalContent{
@@ -143,4 +148,30 @@ input.fileName:disabled{
 .swal-button--cancel:not([disabled]):hover{
     color: white;
     background: rgb(226, 112, 112);
+}
+
+.sheetName{
+    color: #3737ff
+}
+
+.htmlClass{
+    color: #c15900;
+}
+
+.htmlTag{
+    color: blue
+}
+
+.htmlSymbol,
+.JSsymbol{
+    color: grey;
+}
+
+.htmlAttr,
+.JSvar{
+    color: #3766ff
+}
+
+.JSfunction{
+    color: #c78800
 }

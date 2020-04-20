@@ -193,9 +193,25 @@ function createAssignments(assignments, assignmentObject) {
 
     Object.entries(assignments).forEach(assignment => {
         const
-            NAME = assignment[0],
-            PUSHES = assignment[1].join(' <b>-</b> '),
-            LIST_ELEMENT_STRING = `<li><b>${NAME} = [</b> ${PUSHES} <b>]</b></li>`
+            TAG_NAME = assignment[0],
+            sheetPushes = assignment[1],
+            generatePushes = sheets => {
+                const
+                    sheetsHtml = []
+
+                Object.entries(sheets).forEach(sheet => {
+                    const
+                        SHEET_NAME = sheet[0],
+                        PUSHES = sheet[1].join(' | '),
+                        pushSheetHtml = `<b class="sheetName">${SHEET_NAME}(</b> ${PUSHES} <b class="sheetName">)</b>`
+
+                    sheetsHtml.push(pushSheetHtml)
+                })
+
+                return sheetsHtml.join(' <b>-</b> ')
+            }
+
+        LIST_ELEMENT_STRING = `<li><b>${TAG_NAME} = [</b> ${generatePushes(sheetPushes)} <b>]</b></li>`
 
         assignmentList += LIST_ELEMENT_STRING
     })
@@ -402,9 +418,10 @@ function generateCustomGTM(pushData, selects, url) {
                     customGTM.tags[TAG_NAME] = pushValue
 
                 customGTM.assignment[TAG_NAME]
-                    ? customGTM.assignment[TAG_NAME].push(`${SHEET_NAME} (${PUSH_KEY})`)
-                    : customGTM.assignment[TAG_NAME] = [`${SHEET_NAME} (${PUSH_KEY})`]
-
+                    ? customGTM.assignment[TAG_NAME][SHEET_NAME]
+                        ? customGTM.assignment[TAG_NAME][SHEET_NAME].push(PUSH_KEY)
+                        : customGTM.assignment[TAG_NAME][SHEET_NAME] = [PUSH_KEY]
+                    : customGTM.assignment[TAG_NAME] = { [SHEET_NAME]: [PUSH_KEY] }
             })
         }
     })
